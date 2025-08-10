@@ -6,12 +6,6 @@ import 'reader_page.dart';
 class HomePage extends StatelessWidget {
   final List<Book> books = [
     Book(
-      title: "Les Misérables",
-      author: "Victor Hugo",
-      filePath: "assets/books/les_miserables.pdf",
-      coverImage: "assets/covers/les_miserables.jpg",
-    ),
-    Book(
       title: "Harry Potter à l'école des sorciers",
       author: "J.K. Rowling",
       filePath: "assets/books/HP1.pdf",
@@ -22,7 +16,37 @@ class HomePage extends StatelessWidget {
       author: "J.K. Rowling",
       filePath: "assets/books/HP2.pdf",
       coverImage: "assets/covers/hp2.jpg",
-    )
+    ),
+    Book(
+      title: "Harry Potter et le Prisonnier d'Azkaban",
+      author: "J.K. Rowling",
+      filePath: "assets/books/HP3.pdf",
+      coverImage: "assets/covers/hp3.png",
+    ),
+    Book(
+      title: "Harry Potter et la Coupe de Feu",
+      author: "J.K. Rowling",
+      filePath: "assets/books/HP4.pdf",
+      coverImage: "assets/covers/hp4.png",
+    ),
+    Book(
+      title: "Harry Potter et l'Ordre du Phénix",
+      author: "J.K. Rowling",
+      filePath: "assets/books/HP5.pdf",
+      coverImage: "assets/covers/hp5.png",
+    ),
+    Book(
+      title: "Harry Potter et le Prince de Sang-Mêlé",
+      author: "J.K. Rowling",
+      filePath: "assets/books/HP6.pdf",
+      coverImage: "assets/covers/hp6.png",
+    ),
+    Book(
+      title: "Harry Potter et les Reliques de la Mort",
+      author: "J.K. Rowling",
+      filePath: "assets/books/HP7.pdf",
+      coverImage: "assets/covers/hp7.png",
+    ),
   ];
 
   @override
