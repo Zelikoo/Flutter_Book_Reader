@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 import 'pages/home_page.dart';
+import 'package:firebase_core/firebase_core.dart';
 
-void main() => runApp(EbookReaderApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  runApp(EbookReaderApp());
+}
 
 class EbookReaderApp extends StatelessWidget {
   @override

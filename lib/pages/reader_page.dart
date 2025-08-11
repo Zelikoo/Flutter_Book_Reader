@@ -21,7 +21,7 @@ class ReaderPage extends StatelessWidget {
               icon: Icon(Icons.bookmark))
         ],
       ),
-      body: SfPdfViewer.asset(
+      body: SfPdfViewer.network(
         book.filePath,
         key: _pdfViewerKey,
       ),

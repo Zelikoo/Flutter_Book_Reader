@@ -11,7 +11,7 @@ class BookCard extends StatelessWidget {
     return Card(
       child: Column(
         children: [
-          Expanded(child: Image.asset(book.coverImage, fit: BoxFit.cover)),
+          Expanded(child: Image.network(book.coverImage, fit: BoxFit.cover)),
           ListTile(
             title: Text(book.title, style: TextStyle(fontSize: 14)),
             subtitle: Text(book.author, style: TextStyle(fontSize: 12)),

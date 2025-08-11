@@ -2,63 +2,62 @@ import 'package:flutter/material.dart';
 import '../models/book.dart';
 import '../widgets/book_card.dart';
 import 'reader_page.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'addBook_page.dart';
 
-class HomePage extends StatelessWidget {
-  final List<Book> books = [
-    Book(
-      title: "Harry Potter à l'école des sorciers",
-      author: "J.K. Rowling",
-      filePath: "assets/books/HP1.pdf",
-      coverImage: "assets/covers/hp1.jpg",
-    ),
-    Book(
-      title: "Harry Potter et la Chambre des Secrets",
-      author: "J.K. Rowling",
-      filePath: "assets/books/HP2.pdf",
-      coverImage: "assets/covers/hp2.jpg",
-    ),
-    Book(
-      title: "Harry Potter et le Prisonnier d'Azkaban",
-      author: "J.K. Rowling",
-      filePath: "assets/books/HP3.pdf",
-      coverImage: "assets/covers/hp3.png",
-    ),
-    Book(
-      title: "Harry Potter et la Coupe de Feu",
-      author: "J.K. Rowling",
-      filePath: "assets/books/HP4.pdf",
-      coverImage: "assets/covers/hp4.png",
-    ),
-    Book(
-      title: "Harry Potter et l'Ordre du Phénix",
-      author: "J.K. Rowling",
-      filePath: "assets/books/HP5.pdf",
-      coverImage: "assets/covers/hp5.png",
-    ),
-    Book(
-      title: "Harry Potter et le Prince de Sang-Mêlé",
-      author: "J.K. Rowling",
-      filePath: "assets/books/HP6.pdf",
-      coverImage: "assets/covers/hp6.png",
-    ),
-    Book(
-      title: "Harry Potter et les Reliques de la Mort",
-      author: "J.K. Rowling",
-      filePath: "assets/books/HP7.pdf",
-      coverImage: "assets/covers/hp7.png",
-    ),
-  ];
+class HomePage extends StatefulWidget {
+  HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  final _firestore = FirebaseFirestore.instance;
+  final List<Book> booksList = [];
+
+  void initState() {
+    super.initState();
+    getBooks();
+  }
+
+  void getBooks() async {
+    final booksSnapshot = await _firestore.collection('Book').get();
+
+    for (var book in booksSnapshot.docs) {
+      final bookFinal = Book(
+        title: book.get('title'),
+        author: book.get('author'),
+        filePath: book.get('url_book'),
+        coverImage: book.get('url_cover'),
+      );
+      print(bookFinal);
+      booksList.add(bookFinal);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Ma Bibliothèque")),
+      appBar: AppBar(
+        title: Text("Ma Bibliothèque"),
+        centerTitle: true,
+        actions: [
+          IconButton(
+            icon: Icon(Icons.add),
+            onPressed: () => Navigator.push(
+              context,
+              MaterialPageRoute(builder: (_) => AddBookPage()),
+            ).then((_) => setState(() {})),
+          )
+        ],
+      ),
       body: GridView.builder(
-        itemCount: books.length,
+        itemCount: booksList.length,
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2, childAspectRatio: 0.7),
         itemBuilder: (context, index) {
-          final book = books[index];
+          final book = booksList[index];
           return GestureDetector(
             onTap: () => Navigator.push(
               context,
