@@ -1,4 +1,4 @@
-- ajout d'un bouton pour ajouter un nouveau livre + sauvegarde sur hive (service de stockage)
+- ajout d'un bouton pour ajouter un nouveau livre + sauvegarde sur firebase
 - ajout d'un marque page
 - ajout d'un barre de progression de lecture
 - ajout d'un lecteur vocale

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class AddBookPage extends StatefulWidget {
   @override
@@ -8,19 +9,25 @@ class AddBookPage extends StatefulWidget {
 class _AddBookPageState extends State<AddBookPage> {
   final titleController = TextEditingController();
   final authorController = TextEditingController();
-  final urlController = TextEditingController();
+  final urlBookController = TextEditingController();
+  final urlCoverController = TextEditingController();
   bool loading = false;
 
   void saveBook() async {
     setState(() => loading = true);
-    // final service = BookService();
-    // await service.addBookFromUrl(
-    //   titleController.text,
-    //   authorController.text,
-    //   urlController.text,
-    // );
-    // setState(() => loading = false);
-    // Navigator.pop(context);
+    try {
+      await FirebaseFirestore.instance.collection("Book").add({
+        "title": titleController.text,
+        "author": authorController.text,
+        "url_book": urlBookController.text,
+        "url_cover": urlCoverController.text,
+      });
+    } catch (e) {
+      print(e);
+    } finally {
+      setState(() => loading = false);
+    }
+    Navigator.pop(context);
   }
 
   @override
@@ -38,8 +45,11 @@ class _AddBookPageState extends State<AddBookPage> {
                 controller: authorController,
                 decoration: InputDecoration(labelText: "Auteur")),
             TextField(
-                controller: urlController,
-                decoration: InputDecoration(labelText: "URL PDF")),
+                controller: urlBookController,
+                decoration: InputDecoration(labelText: "URL Livre")),
+            TextField(
+                controller: urlCoverController,
+                decoration: InputDecoration(labelText: "URL Couverture")),
             SizedBox(height: 20),
             ElevatedButton(
               onPressed: loading ? null : saveBook,

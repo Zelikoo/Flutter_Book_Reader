@@ -24,16 +24,19 @@ class _HomePageState extends State<HomePage> {
   void getBooks() async {
     final booksSnapshot = await _firestore.collection('Book').get();
 
-    for (var book in booksSnapshot.docs) {
-      final bookFinal = Book(
+    final loadedBooks = booksSnapshot.docs.map((book) {
+      return Book(
         title: book.get('title'),
         author: book.get('author'),
         filePath: book.get('url_book'),
         coverImage: book.get('url_cover'),
       );
-      print(bookFinal);
-      booksList.add(bookFinal);
-    }
+    }).toList();
+
+    setState(() {
+      booksList.clear();
+      booksList.addAll(loadedBooks);
+    });
   }
 
   @override
@@ -48,7 +51,10 @@ class _HomePageState extends State<HomePage> {
             onPressed: () => Navigator.push(
               context,
               MaterialPageRoute(builder: (_) => AddBookPage()),
-            ).then((_) => setState(() {})),
+            ).then((_) => setState(() {
+                  booksList.clear();
+                  getBooks();
+                })),
           )
         ],
       ),
